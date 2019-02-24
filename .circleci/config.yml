@@ -1,0 +1,42 @@
+version: 2.1
+
+orbs:
+  cli: circleci/circleci-cli@0.1.3
+  orb-tools: circleci/orb-tools@8.3.0
+
+jobs:
+  schema-validation:
+    executor: cli/default
+    steps:
+      - checkout
+      - orb-tools/validate:
+          orb-path: orb.yml
+  publish-sha:
+    executor: cli/default
+    steps:
+      - checkout
+      - orb-tools/publish:
+          orb-path: orb.yml
+          orb-ref: thefrontside/react@dev:$CIRCLE_SHA1
+          token-variable: $ORB_PUBLISHING_TOKEN
+  integration-test:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - cli/install
+      - checkout
+      - run: cp -r ~/.ssh ~/project
+      - run: sed -i -e 's/$CIRCLE_SHA1/'$CIRCLE_SHA1'/g' src/git/config.yml
+      - run: circleci config process src/git/config.yml > src/git/processed_config.yml
+      - run: circleci local execute -c src/git/processed_config.yml | tee local_build_output.txt /dev/stderr | tail -n 1 | grep "Success"
+
+workflows:
+  git:
+    jobs:
+      - schema-validation
+      - publish-sha:
+          requires:
+            - schema-validation
+      - integration-test:
+          requires:
+            - publish-sha
