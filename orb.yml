@@ -11,20 +11,43 @@ executors:
       - image: circleci/node:<<parameters.node>>
 
 commands:
+  install:
+    description: "Install dependencies"
+    steps:
+      - run: yarn install
+
+  eslint:
+    description: "Lint JS"
+    steps:
+      - run: yarn eslint
+          --max-warnings=0
+          --format junit
+          --output-file ./artifacts/eslint/eslint.xml
+
+  stylelint:
+    description: "Lint style files"
+    steps:
+      - run: yarn --silent stylelint
+          --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
+
+  build:
+    description: "Create a production build"
+    steps:
+      - run: NODE_ENV=production yarn build
+
+  test:
+    description: "Run tests"
+    steps:
+      - run: yarn test
+
+jobs:
   checkout-and-install:
-    # parameters:
-    #   packageManager:
-    #     default: "npm"
-    #     type: enum
-    #     description: Package manager to use. Must be "npm" or "yarn".
-    #     enum: [ "yarn", "npm" ]
+    executor: default
     steps:
       - checkout
       - restore_cache:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - install
       - persist_to_workspace:
           root: ~/
           paths: project
@@ -32,69 +55,42 @@ commands:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
           paths:
             - ~/project/node_modules
+
   eslint:
+    executor: default
     steps:
       - attach_workspace:
           at: ~/
-      - run:
-          name: Lint JS
-          command:
-            yarn eslint
-            --max-warnings=0
-            --format junit
-            --output-file ./artifacts/eslint/eslint.xml
+      - eslint
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
           path: ./artifacts
+
   stylelint:
+    executor: default
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: Set up artifacts directory
           command: mkdir -p artifacts/stylelint
-      - run:
-          name: Lint CSS
-          command:
-            yarn --silent stylelint
-            --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
+      - stylelint
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
           path: ./artifacts
-  build:
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Build bundle
-          command: NODE_ENV=production yarn build
-  test:
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run tests
-          command: yarn test
-jobs:
-  checkout-and-install:
-    executor: default
-    steps:
-      - checkout-and-install
-  eslint:
-    executor: default
-    steps:
-      - eslint
-  stylelint:
-    executor: default
-    steps:
-      - stylelint
+
   test:
     executor: default
     steps:
+      - attach_workspace:
+          at: ~/
       - test
+
   build:
     executor: default
     steps:
+      - attach_workspace:
+          at: ~/
       - build
