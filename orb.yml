@@ -1,1 +1,100 @@
-{version: "2.1", description: "Production ready React.js deployment"}
+version: "2.1"
+description: "Production ready workflow for testing and building React.js applications"
+
+executors:
+  default:
+    parameters:
+      node:
+        type: string
+        default: "10"
+    docker:
+      - image: circleci/node:<<parameters.node>>
+
+commands:
+  checkout-and-install:
+    # parameters:
+    #   packageManager:
+    #     default: "npm"
+    #     type: enum
+    #     description: Package manager to use. Must be "npm" or "yarn".
+    #     enum: [ "yarn", "npm" ]
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+      - save_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
+  eslint:
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Lint JS
+          command:
+            yarn eslint
+            --max-warnings=0
+            --format junit
+            --output-file ./artifacts/eslint/eslint.xml
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+  stylelint:
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Set up artifacts directory
+          command: mkdir -p artifacts/stylelint
+      - run:
+          name: Lint CSS
+          command:
+            yarn --silent stylelint
+            --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+  build:
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Build bundle
+          command: NODE_ENV=production yarn build
+  test:
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test
+jobs:
+  checkout-and-install:
+    executor: default
+    steps:
+      - checkout-and-install
+  eslint:
+    executor: default
+    steps:
+      - eslint
+  stylelint:
+    executor: default
+    steps:
+      - stylelint
+  test:
+    executor: default
+    steps:
+      - test
+  build:
+    executor: default
+    steps:
+      - build
