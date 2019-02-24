@@ -1,6 +1,30 @@
 version: "2.1"
 description: "Production ready workflow for testing and building React.js applications"
 
+examples:
+  test-and-coverage-on-push:
+    description: Run tests and generate coverage report on every push
+    usage:
+      version: 2.1
+      orbs:
+        react: thefrontside/react@0.0.5
+      workflows:
+        push:
+          jobs:
+            - react/checkout-and-install
+            - react/eslint:
+                requires:
+                  - react/checkout-and-install
+            - react/stylelint:
+                requires:
+                  - react/checkout-and-install
+            - react/test:
+                requires:
+                  - react/checkout-and-install
+            - react/coverage:
+                requires:
+                  - react/checkout-and-install
+
 executors:
   default:
     parameters:
@@ -36,9 +60,16 @@ commands:
       - run: NODE_ENV=production yarn build
 
   test:
-    description: "Run tests"
+    description: "Run tests using Jest"
     steps:
       - run: yarn test
+
+  coverage:
+    description: "Generate coverage report using Jest and Istanbul"
+    steps:
+      - run: yarn test
+          --collectCoverage
+          --coverageDirectory=./artifacts/coverage
 
 jobs:
   checkout-and-install:
@@ -94,3 +125,12 @@ jobs:
       - attach_workspace:
           at: ~/
       - build
+
+  coverage:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/
+      - coverage
+      - store_artifacts:
+          path: ./artifacts
