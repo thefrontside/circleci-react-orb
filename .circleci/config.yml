@@ -4,9 +4,6 @@ orbs:
   orb-tools: circleci/orb-tools@8.3.0
   react: thefrontside/react@dev:alpha
 
-# orb-name: thefrontside/react
-# ssh-fingerprints: f3:9b:57:3e:b3:0d:ef:73:5d:50:4f:d7:47:d4:ac:30
-
 workflows:
   lint-validate_publish-dev:
     jobs:
@@ -35,7 +32,7 @@ workflows:
       # key in CircleCI via SSH Permissions, with github.com as Hostname)
       - orb-tools/trigger-integration-workflow:
           name: trigger-integration-dev
-          ssh-fingerprints: f3:9b:57:3e:b3:0d:ef:73:5d:50:4f:d7:47:d4:ac:30
+          ssh-fingerprints: a4:a9:94:61:d8:cf:bd:b6:36:7e:c9:ea:f7:1e:49:e6
           requires:
             - orb-tools/publish-dev
           filters:
@@ -46,7 +43,7 @@ workflows:
       # the 2nd job (below) may also publish a production orb version
       - orb-tools/trigger-integration-workflow:
           name: trigger-integration-master
-          ssh-fingerprints: f3:9b:57:3e:b3:0d:ef:73:5d:50:4f:d7:47:d4:ac:30
+          ssh-fingerprints: a4:a9:94:61:d8:cf:bd:b6:36:7e:c9:ea:f7:1e:49:e6
           tag: master
           requires:
             - orb-tools/publish-dev
