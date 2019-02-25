@@ -1,4 +1,4 @@
-description: > 
+description: >
     Checkout and install dependencies
 
 executor: default

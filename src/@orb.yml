@@ -1,5 +1,5 @@
 version: 2.1
 
 description: >
-  Production ready workflow for testing and building React.js applications. 
+  Production ready workflow for testing and building React.js applications.
   Full orb source code: https://github.com/thefrontside/circleci-react-orb

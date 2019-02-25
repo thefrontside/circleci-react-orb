@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Install create-react-app
           command: yarn global add create-react-app
-      - run: 
+      - run:
           name: Download example app from GitHub
           command: curl https://github.com/thefrontside/circleci-react-orb-test/archive/master.zip | unzip
       # - react/install:
@@ -46,7 +46,7 @@ workflows:
           orb-name: thefrontside/react
           requires:
             - orb-tools/pack
-      
+
       # trigger an integration workflow to test the dev version of your orb
       # an SSH key must be stored in your orb's repository and in CircleCI
       # (add the public key as a read/write key on GitHub; add the private
@@ -73,64 +73,64 @@ workflows:
               only: master
 
   integration-tests_prod-release:
-      jobs:
-        # your integration test jobs go here: essentially, run all your orb's
-        # jobs and commands to ensure they behave as expected. or, run other
-        # integration tests of your choosing
+    jobs:
+      # your integration test jobs go here: essentially, run all your orb's
+      # jobs and commands to ensure they behave as expected. or, run other
+      # integration tests of your choosing
 
-        # this would need to be defined in a `jobs` section (not shown here)
-        - integration-tests:
-            name: integration-tests-dev
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /integration-.*/
+      # this would need to be defined in a `jobs` section (not shown here)
+      - integration-tests:
+          name: integration-tests-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
 
-        # call jobs twice, once for workflows resulting from non-master-branch
-        # commits (above); once for commits to master (below)
-        - integration-tests:
-            name: integration-tests-master
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /master-.*/
-  
-        # patch, minor, or major publishing, depending on which orb source
-        # files have been modified (that logic lives in the
-        # trigger-integration-workflow job's source)
-        - orb-tools/dev-promote-prod:
-            name: dev-promote-patch
-            orb-name: thefrontside/react
-            requires:
-              - integration-tests-master
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /master-patch.*/
+      # call jobs twice, once for workflows resulting from non-master-branch
+      # commits (above); once for commits to master (below)
+      - integration-tests:
+          name: integration-tests-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
 
-        - orb-tools/dev-promote-prod:
-            name: dev-promote-minor
-            release: minor
-            orb-name: thefrontside/react
-            requires:
-              - integration-tests-master
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /master-minor.*/
+      # patch, minor, or major publishing, depending on which orb source
+      # files have been modified (that logic lives in the
+      # trigger-integration-workflow job's source)
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-patch
+          orb-name: thefrontside/react
+          requires:
+            - integration-tests-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-patch.*/
 
-        - orb-tools/dev-promote-prod:
-            name: dev-promote-major
-            release: major
-            orb-name: thefrontside/react
-            requires:
-              - integration-tests-master
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /master-major.*/
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-minor
+          release: minor
+          orb-name: thefrontside/react
+          requires:
+            - integration-tests-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-minor.*/
+
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-major
+          release: major
+          orb-name: thefrontside/react
+          requires:
+            - integration-tests-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-major.*/
