@@ -6,6 +6,6 @@ steps:
       at: ~/
 
   - coverage
-  
+
   - store_artifacts:
       path: ./artifacts
