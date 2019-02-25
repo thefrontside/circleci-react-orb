@@ -1,0 +1,5 @@
+executor: default
+steps:
+  - attach_workspace:
+      at: ~/
+  - test

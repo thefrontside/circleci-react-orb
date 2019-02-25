@@ -1,0 +1,29 @@
+description: >
+  Run tests and generate coverage report on every push
+
+usage:
+  version: 2.1
+  
+  orbs:
+    react: thefrontside/react@dev:alpha
+
+  workflows:
+    push:
+      jobs:
+        - react/checkout-and-install
+
+        - react/eslint:
+            requires:
+              - react/checkout-and-install
+
+        - react/stylelint:
+            requires:
+              - react/checkout-and-install
+
+        - react/test:
+            requires:
+              - react/checkout-and-install
+
+        - react/coverage:
+            requires:
+              - react/checkout-and-install

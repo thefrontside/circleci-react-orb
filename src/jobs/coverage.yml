@@ -1,0 +1,8 @@
+executor: default
+
+steps:
+  - attach_workspace:
+      at: ~/
+  - coverage
+  - store_artifacts:
+      path: ./artifacts

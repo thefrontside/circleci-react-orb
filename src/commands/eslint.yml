@@ -1,0 +1,6 @@
+description: "Lint JS"
+steps:
+  - run: yarn eslint
+      --max-warnings=0
+      --format junit
+      --output-file ./artifacts/eslint/eslint.xml

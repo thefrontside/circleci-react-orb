@@ -1,0 +1,5 @@
+description: "Generate coverage report using Jest and Istanbul"
+steps:
+  - run: yarn test
+      --collectCoverage
+      --coverageDirectory=./artifacts/coverage
