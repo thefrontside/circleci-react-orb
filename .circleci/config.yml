@@ -6,8 +6,8 @@ orbs:
 
 jobs:
   - integration-tests:
-    steps:
-      - run: echo 'hello world'
+      steps:
+        - run: echo 'hello world'
 
 workflows:
   lint-validate_publish-dev:
