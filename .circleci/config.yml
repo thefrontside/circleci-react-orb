@@ -17,11 +17,11 @@ jobs:
       - run: 
           name: Download example app from GitHub
           command: curl https://github.com/thefrontside/circleci-react-orb-test/archive/master.zip | unzip
-      - react/install:
-          checkout: false
-      - react/eslint
-      - react/stylelint
-      - react/test
+      # - react/install:
+      #     checkout: false
+      # - react/eslint
+      # - react/stylelint
+      # - react/test
 
 workflows:
   lint-validate_publish-dev:
