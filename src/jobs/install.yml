@@ -5,18 +5,17 @@ executor: default
 
 parameters:
 
-  checkout:
-    type: boolean
-    default: true
+  before_install:
     description: >
-      Checkout as a first step? Default is true
+      Steps to be executed before restoring cache and running install.
+      Default is to run 'checkout' command.
+    type: steps
+    default:
+      - checkout
 
 steps:
 
-  - when:
-      condition: <<parameters.checkout>>
-      steps:
-        - checkout
+  - steps: <<parameters.before_install>>
 
   - restore_cache:
       key: v1-node-modules-{{ checksum "yarn.lock" }}
@@ -25,9 +24,9 @@ steps:
 
   - persist_to_workspace:
       root: ~/
-      paths: project
+      paths: ./*
 
   - save_cache:
       key: v1-node-modules-{{ checksum "yarn.lock" }}
       paths:
-        - ~/project/node_modules
+        - ~/node_modules

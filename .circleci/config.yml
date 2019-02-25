@@ -14,12 +14,12 @@ jobs:
 
       - run:
           name: Download example app from https://github.com/thefrontside/circleci-react-orb-test
-          command: git clone https://github.com/thefrontside/circleci-react-orb-test.git project
+          command: git clone https://github.com/thefrontside/circleci-react-orb-test.git .
 
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
+            - ./*
 
 workflows:
   lint-validate_publish-dev:
@@ -84,7 +84,9 @@ workflows:
 
       - react/install:
           name: integration-tests-install-dev
-          checkout: false
+          before_install:
+            - attach_workspace:
+                at: ~/
           requires:
             - integration-tests-dev
           filters:
@@ -105,7 +107,9 @@ workflows:
 
       - react/install:
           name: integration-tests-install-master
-          checkout: false
+          before_install:
+            - attach_workspace:
+                at: ~/
           requires:
             - integration-tests-master
           filters:
