@@ -12,7 +12,7 @@ jobs:
           fingerprints: 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
       - run:
           name: Install curl jq
-          command: apt-get update && apt-get install -y curl jq
+          command: apt-get update && sudo apt-get install -y jq
       - run:
           name: Install create-react-app
           command: yarn global add create-react-app
