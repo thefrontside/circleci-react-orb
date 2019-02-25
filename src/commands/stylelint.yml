@@ -2,5 +2,4 @@ description: >
   Lint style files
 
 steps:
-  - run: |
-    yarn --silent stylelint --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
+  - run: yarn --silent stylelint --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
