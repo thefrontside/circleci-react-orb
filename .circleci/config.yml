@@ -9,7 +9,7 @@ jobs:
     executor: react/default
     steps:
       - add_ssh_keys:
-          fingerprints: a4:a9:94:61:d8:cf:bd:b6:36:7e:c9:ea:f7:1e:49:e6
+          fingerprints: 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
       - run:
           name: Install curl jq
           command: apt-get update && apt-get install -y curl jq
