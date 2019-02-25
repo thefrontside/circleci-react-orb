@@ -13,13 +13,13 @@ jobs:
             - 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
 
       - run:
-          name: Download example app from GitHub
-          command: git clone https://github.com/thefrontside/circleci-react-orb-test.git .
+          name: Download example app from https://github.com/thefrontside/circleci-react-orb-test
+          command: git clone https://github.com/thefrontside/circleci-react-orb-test.git project
 
       - persist_to_workspace:
-          root: ./
+          root: ~/
           paths:
-            - ./*
+            - project
 
 workflows:
   lint-validate_publish-dev:
