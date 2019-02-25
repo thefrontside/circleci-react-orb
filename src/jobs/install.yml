@@ -1,12 +1,31 @@
+description: > 
+    Checkout and install dependencies
+
 executor: default
+
+parameters:
+  checkout:
+    type: boolean
+    default: true
+    description: >
+      Checkout as a first step? Default is true
+
 steps:
-  - checkout
+
+  - when:
+      condition: <<parameters.checkout>>
+      steps:
+        - checkout
+
   - restore_cache:
       key: v1-node-modules-{{ checksum "yarn.lock" }}
+
   - install
+
   - persist_to_workspace:
       root: ~/
       paths: project
+
   - save_cache:
       key: v1-node-modules-{{ checksum "yarn.lock" }}
       paths:

@@ -1,3 +1,5 @@
-description: "Install dependencies"
+description: >
+  Install dependencies
+
 steps:
   - run: yarn install
