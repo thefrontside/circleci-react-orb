@@ -2,6 +2,7 @@ description: >
   Lint JS
 
 steps:
+  - run: ls
   - run: yarn eslint
       --max-warnings=0
       --format junit
