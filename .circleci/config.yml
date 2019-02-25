@@ -95,6 +95,16 @@ workflows:
             tags:
               only: /integration-.*/
 
+      - react/eslint:
+          name: integration-tests-eslint-dev
+          requires:
+            - integration-tests-install-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
+
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
       - setup-integration-tests:
@@ -112,6 +122,16 @@ workflows:
                 at: ~/
           requires:
             - integration-tests-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
+      - react/eslint:
+          name: integration-tests-eslint-master
+          requires:
+            - integration-tests-install-master
           filters:
             branches:
               ignore: /.*/
