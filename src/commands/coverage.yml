@@ -1,4 +1,6 @@
-description: "Generate coverage report using Jest and Istanbul"
+description: >
+  Generate coverage report using Jest and Istanbul
+
 steps:
   - run: yarn test
       --collectCoverage

@@ -1,4 +1,6 @@
-description: "Lint style files"
+description: >
+  Lint style files
+
 steps:
   - run: yarn --silent stylelint
       --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml

@@ -1,4 +1,6 @@
-description: "Lint JS"
+description: >
+  Lint JS
+
 steps:
   - run: yarn eslint
       --max-warnings=0

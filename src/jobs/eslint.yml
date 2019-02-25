@@ -1,10 +1,14 @@
 executor: default
 
 steps:
+
   - attach_workspace:
       at: ~/
+      
   - eslint
+
   - store_test_results:
       path: ./artifacts
+      
   - store_artifacts:
       path: ./artifacts

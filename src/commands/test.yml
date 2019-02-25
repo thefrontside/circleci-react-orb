@@ -1,3 +1,5 @@
-description: "Run tests using Jest"
+description: >
+  Run tests using Jest
+
 steps:
   - run: yarn test

@@ -4,6 +4,7 @@ description: >
 executor: default
 
 parameters:
+
   checkout:
     type: boolean
     default: true

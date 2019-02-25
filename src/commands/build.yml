@@ -1,3 +1,5 @@
-description: "Create a production build"
+description: >
+  Create a production build
+
 steps:
   - run: NODE_ENV=production yarn build
