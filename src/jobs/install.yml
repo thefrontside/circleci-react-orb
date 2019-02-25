@@ -24,9 +24,10 @@ steps:
 
   - persist_to_workspace:
       root: ~/
-      paths: ./*
+      paths: 
+        - project
 
   - save_cache:
       key: v1-node-modules-{{ checksum "yarn.lock" }}
       paths:
-        - ~/node_modules
+        - ~/project/node_modules
