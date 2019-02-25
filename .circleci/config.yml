@@ -5,26 +5,21 @@ orbs:
   react: thefrontside/react@dev:alpha
 
 jobs:
-  integration-tests:
+  setup-integration-tests:
     executor: react/default
     steps:
       - add_ssh_keys:
           fingerprints:
             - 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
-      # - run:
-      #     name: Install jq
-      #     command: sudo apt-get install -y jq
-      - run:
-          name: Install create-react-app
-          command: yarn global add create-react-app
+
       - run:
           name: Download example app from GitHub
           command: git clone https://github.com/thefrontside/circleci-react-orb-test.git .
-      - react/install:
-          checkout: false
-      - react/eslint
-      - react/stylelint
-      - react/test
+
+      - persist_to_workspace:
+          root: ~
+          paths:
+            - *
 
 workflows:
   lint-validate_publish-dev:
@@ -79,14 +74,23 @@ workflows:
       # jobs and commands to ensure they behave as expected. or, run other
       # integration tests of your choosing
 
-      # this would need to be defined in a `jobs` section (not shown here)
-      - integration-tests:
+      - setup-integration-tests:
           name: integration-tests-dev
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /integration-.*/
+
+      - react/install:
+          checkout: false
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
+          requires:
+            - setup-integration-tests
 
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
