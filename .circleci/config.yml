@@ -6,20 +6,20 @@ orbs:
 
 jobs:
   setup-integration-tests:
-      executor: react/default
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
+    executor: react/default
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 48:d3:42:0f:47:ff:0f:71:d0:4f:17:5b:21:05:cf:90
 
-        - run:
-            name: Download example app from GitHub
-            command: git clone https://github.com/thefrontside/circleci-react-orb-test.git .
+      - run:
+          name: Download example app from GitHub
+          command: git clone https://github.com/thefrontside/circleci-react-orb-test.git .
 
-        - persist_to_workspace:
-            root: ./
-            paths:
-              - ~/*
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ~/*
 
 workflows:
   lint-validate_publish-dev:

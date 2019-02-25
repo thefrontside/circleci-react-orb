@@ -6,10 +6,10 @@ executor: default
 parameters:
 
   checkout:
-      type: boolean
-      default: true
-      description: >
-        Checkout as a first step? Default is true
+    type: boolean
+    default: true
+    description: >
+      Checkout as a first step? Default is true
 
 steps:
 
