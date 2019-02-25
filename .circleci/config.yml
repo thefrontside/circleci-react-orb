@@ -18,7 +18,7 @@ jobs:
           command: yarn global add create-react-app
       - run:
           name: Download example app from GitHub
-          command: curl -K https://github.com/thefrontside/circleci-react-orb-test/archive/master.zip -o react-app.zip
+          command: curl https://github.com/thefrontside/circleci-react-orb-test/archive/master.zip >> react-app.zip
       - run:
           name: Unzip the app
           command: unzip react-app.zip
