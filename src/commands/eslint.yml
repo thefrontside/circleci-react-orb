@@ -2,7 +2,10 @@ description: >
   Lint JS
 
 steps:
-  - run: ls
+  - run:
+    name: Ensure artifacts directory is present
+    command: mkdir -p artifacts/eslint
+
   - run: yarn eslint
       --max-warnings=0
       --format junit
