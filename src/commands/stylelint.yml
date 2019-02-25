@@ -3,7 +3,7 @@ description: >
 
 steps:
   - run:
-    name: Ensure artifacts directory is present
-    command: mkdir -p artifacts/stylelint
+      name: Ensure artifacts directory is present
+      command: mkdir -p artifacts/stylelint
 
   - run: yarn --silent stylelint --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml

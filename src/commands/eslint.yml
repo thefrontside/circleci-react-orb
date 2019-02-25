@@ -3,8 +3,8 @@ description: >
 
 steps:
   - run:
-    name: Ensure artifacts directory is present
-    command: mkdir -p artifacts/eslint
+      name: Ensure artifacts directory is present
+      command: mkdir -p artifacts/eslint
 
   - run: yarn eslint
       --max-warnings=0
