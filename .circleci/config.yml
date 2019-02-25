@@ -106,14 +106,14 @@ workflows:
               only: /integration-.*/
 
       - react/stylelint:
-        name: integration-tests-stylelint-dev
-        requires:
-          - integration-tests-install-dev
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /integration-.*/
+          name: integration-tests-stylelint-dev
+          requires:
+            - integration-tests-install-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
 
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
@@ -149,14 +149,14 @@ workflows:
               only: /master-.*/
 
       - react/stylelint:
-        name: integration-tests-stylelint-master
-        requires:
-          - integration-tests-install-master
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /master-.*/
+          name: integration-tests-stylelint-master
+          requires:
+            - integration-tests-install-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
 
       # patch, minor, or major publishing, depending on which orb source
       # files have been modified (that logic lives in the
