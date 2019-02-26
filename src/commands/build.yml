@@ -2,4 +2,10 @@ description: >
   Create a production build
 
 steps:
+  - run:
+      name: Ensure artifacts directory is present
+      command: mkdir -p artifacts
+
   - run: NODE_ENV=production yarn build
+
+  - run: cp -r build artifacts
