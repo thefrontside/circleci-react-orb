@@ -125,6 +125,17 @@ workflows:
             tags:
               only: /integration-.*/
 
+      - react/build:
+          name: integration-build-dev
+          requires:
+            - integration-install-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
+
+
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
       - setup-integration-tests:
@@ -170,6 +181,16 @@ workflows:
 
       - react/test:
           name: integration-test-master
+          requires:
+            - integration-install-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
+      - react/build:
+          name: integration-build-master
           requires:
             - integration-install-master
           filters:
