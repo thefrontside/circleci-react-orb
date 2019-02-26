@@ -98,7 +98,7 @@ workflows:
       - react/eslint:
           name: integration-eslint-dev
           requires:
-            - integration-setup-dev
+            - integration-install-dev
           filters:
             branches:
               ignore: /.*/
@@ -108,7 +108,7 @@ workflows:
       - react/stylelint:
           name: integration-stylelint-dev
           requires:
-            - integration-setup-dev
+            - integration-install-dev
           filters:
             branches:
               ignore: /.*/
@@ -118,7 +118,7 @@ workflows:
       - react/test:
           name: integration-test-dev
           requires:
-            - integration-setup-dev
+            - integration-install-dev
           filters:
             branches:
               ignore: /.*/
