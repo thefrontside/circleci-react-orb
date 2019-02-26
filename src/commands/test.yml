@@ -7,7 +7,7 @@ steps:
       name: Install JUnit coverage reporter
       command: yarn add --dev jest-junit
 
-  - run: 
+  - run:
       name: Run tests with JUnit as reporter
       command: jest --ci --runInBand --reporters=default --reporters=jest-junit
       environment:
