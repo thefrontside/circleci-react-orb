@@ -20,6 +20,12 @@ jobs:
           root: ~/
           paths:
             - project
+  integration-tests:
+    executor:
+      docker:
+        - image: circleci/node:13
+    steps:
+      run: echo "$CIRCLE_BUILD_URL""$CIRCLE_NODE_INDEX"artifacts"$CIRCLE_ARTIFACTS"
 
 workflows:
   lint-validate_publish-dev:
@@ -145,6 +151,30 @@ workflows:
             tags:
               only: /integration-.*/
 
+      - react/coverage:
+          name: integration-coverage-dev
+          requires:
+            - integration-install-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
+
+      - integration-tests:
+          name: integration-tests-dev
+          requires:
+            - integration-coverage-dev
+            - integration-eslint-dev
+            - integration-stylelint-dev
+            - integration-test-dev
+            - integration-build-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
       - setup-integration-tests:
@@ -208,10 +238,14 @@ workflows:
             tags:
               only: /master-.*/
 
-      - react/coverage:
-          name: integration-coverage-master
+      - integration-tests:
+          name: integration-tests-master
           requires:
-            - integration-install-master
+            - integration-coverage-master
+            - integration-eslint-master
+            - integration-stylelint-master
+            - integration-test-master
+            - integration-build-master
           filters:
             branches:
               ignore: /.*/
