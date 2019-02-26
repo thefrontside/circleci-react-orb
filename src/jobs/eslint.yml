@@ -1,4 +1,4 @@
-descriptor: >
+description: >
     Run ESLint on the source code.
     The generated report is stored in artifacts.
 
