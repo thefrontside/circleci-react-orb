@@ -135,6 +135,15 @@ workflows:
             tags:
               only: /integration-.*/
 
+      - react/coverage:
+          name: integration-coverage-dev
+          requires:
+            - integration-install-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
 
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
@@ -191,6 +200,16 @@ workflows:
 
       - react/build:
           name: integration-build-master
+          requires:
+            - integration-install-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
+      - react/coverage:
+          name: integration-coverage-master
           requires:
             - integration-install-master
           filters:
