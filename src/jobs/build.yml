@@ -6,3 +6,6 @@ steps:
       at: ~/
 
   - build
+
+  - store_artifacts:
+      path: ./artifacts
