@@ -22,7 +22,7 @@ jobs:
             - project
   integration-tests:
     docker:
-      - image: circleci/node:13
+      - image: circleci/node:10
     steps:
       - run: echo "$CIRCLE_BUILD_URL""$CIRCLE_NODE_INDEX"artifacts"$CIRCLE_ARTIFACTS"
 
