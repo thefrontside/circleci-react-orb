@@ -4,7 +4,7 @@ description: >
 steps:
 
   - run:
-      name: Install JUnit coverage reporter
+      name: Install JUnit reporter
       command: yarn add --dev jest-junit
 
   - run:
