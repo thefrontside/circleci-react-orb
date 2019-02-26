@@ -14,7 +14,7 @@
 ## Limitations
 
 - Currently only supports yarn (we'll add NPM support shortly)
-- Current Orb assumes: Jest, ESLint and Stylelint
+- Current Orb assumes: Create React App, Jest, ESLint and Stylelint
 - TypeScript not supported yet, but will be in the future
 
 ## Basic setup
