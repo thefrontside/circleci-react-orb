@@ -115,6 +115,16 @@ workflows:
             tags:
               only: /integration-.*/
 
+      - react/test:
+          name: integration-test-dev
+          requires:
+            - integration-setup-dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /integration-.*/
+
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
       - setup-integration-tests:
@@ -158,6 +168,16 @@ workflows:
             tags:
               only: /master-.*/
 
+      - react/test:
+          name: integration-test-master
+          requires:
+            - integration-install-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
       # patch, minor, or major publishing, depending on which orb source
       # files have been modified (that logic lives in the
       # trigger-integration-workflow job's source)
@@ -165,7 +185,7 @@ workflows:
           name: dev-promote-patch
           orb-name: thefrontside/react
           requires:
-            - integration-tests-master
+            - integration-test-master
           filters:
             branches:
               ignore: /.*/
@@ -177,7 +197,7 @@ workflows:
           release: minor
           orb-name: thefrontside/react
           requires:
-            - integration-tests-master
+            - integration-test-master
           filters:
             branches:
               ignore: /.*/
@@ -189,7 +209,7 @@ workflows:
           release: major
           orb-name: thefrontside/react
           requires:
-            - integration-tests-master
+            - integration-test-master
           filters:
             branches:
               ignore: /.*/
