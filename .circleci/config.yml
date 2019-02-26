@@ -75,7 +75,7 @@ workflows:
       # integration tests of your choosing
 
       - setup-integration-tests:
-          name: integration-tests-dev
+          name: integration-setup-dev
           filters:
             branches:
               ignore: /.*/
@@ -83,12 +83,12 @@ workflows:
               only: /integration-.*/
 
       - react/install:
-          name: integration-tests-install-dev
+          name: integration-install-dev
           before_install:
             - attach_workspace:
                 at: ~/
           requires:
-            - integration-tests-dev
+            - integration-setup-dev
           filters:
             branches:
               ignore: /.*/
@@ -96,9 +96,9 @@ workflows:
               only: /integration-.*/
 
       - react/eslint:
-          name: integration-tests-eslint-dev
+          name: integration-eslint-dev
           requires:
-            - integration-tests-install-dev
+            - integration-setup-dev
           filters:
             branches:
               ignore: /.*/
@@ -106,9 +106,9 @@ workflows:
               only: /integration-.*/
 
       - react/stylelint:
-          name: integration-tests-stylelint-dev
+          name: integration-stylelint-dev
           requires:
-            - integration-tests-install-dev
+            - integration-setup-dev
           filters:
             branches:
               ignore: /.*/
@@ -118,7 +118,7 @@ workflows:
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
       - setup-integration-tests:
-          name: integration-tests-master
+          name: integration-setup-master
           filters:
             branches:
               ignore: /.*/
@@ -126,12 +126,12 @@ workflows:
               only: /master-.*/
 
       - react/install:
-          name: integration-tests-install-master
+          name: integration-install-master
           before_install:
             - attach_workspace:
                 at: ~/
           requires:
-            - integration-tests-master
+            - integration-setup-master
           filters:
             branches:
               ignore: /.*/
@@ -139,9 +139,9 @@ workflows:
               only: /master-.*/
 
       - react/eslint:
-          name: integration-tests-eslint-master
+          name: integration-eslint-master
           requires:
-            - integration-tests-install-master
+            - integration-install-master
           filters:
             branches:
               ignore: /.*/
@@ -149,9 +149,9 @@ workflows:
               only: /master-.*/
 
       - react/stylelint:
-          name: integration-tests-stylelint-master
+          name: integration-stylelint-master
           requires:
-            - integration-tests-install-master
+            - integration-install-master
           filters:
             branches:
               ignore: /.*/
