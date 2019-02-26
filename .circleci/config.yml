@@ -21,9 +21,8 @@ jobs:
           paths:
             - project
   integration-tests:
-    executor:
-      docker:
-        - image: circleci/node:13
+    docker:
+      - image: circleci/node:13
     steps:
       run: echo "$CIRCLE_BUILD_URL""$CIRCLE_NODE_INDEX"artifacts"$CIRCLE_ARTIFACTS"
 
