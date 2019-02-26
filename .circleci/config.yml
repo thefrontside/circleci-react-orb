@@ -237,6 +237,16 @@ workflows:
             tags:
               only: /master-.*/
 
+      - react/coverage:
+          name: integration-coverage-master
+          requires:
+            - integration-install-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-.*/
+
       - integration-tests:
           name: integration-tests-master
           requires:
