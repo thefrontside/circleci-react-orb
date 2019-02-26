@@ -20,7 +20,7 @@ jobs:
           root: ~/
           paths:
             - project
-  integration-tests:
+  integration-test-artifacts:
     docker:
       - image: circleci/node:10
     steps:
@@ -150,7 +150,7 @@ workflows:
             tags:
               only: /integration-.*/
 
-      - integration-tests:
+      - integration-test-artifacts:
           name: integration-tests-dev
           requires:
             - integration-coverage-dev
@@ -163,7 +163,6 @@ workflows:
               ignore: /.*/
             tags:
               only: /integration-.*/
-
 
       # call jobs twice, once for workflows resulting from non-master-branch
       # commits (above); once for commits to master (below)
@@ -238,7 +237,7 @@ workflows:
             tags:
               only: /master-.*/
 
-      - integration-tests:
+      - integration-test-artifacts:
           name: integration-tests-master
           requires:
             - integration-coverage-master
@@ -259,7 +258,7 @@ workflows:
           name: dev-promote-patch
           orb-name: thefrontside/react
           requires:
-            - integration-test-master
+            - integration-tests-master
           filters:
             branches:
               ignore: /.*/
@@ -271,7 +270,7 @@ workflows:
           release: minor
           orb-name: thefrontside/react
           requires:
-            - integration-test-master
+            - integration-tests-master
           filters:
             branches:
               ignore: /.*/
@@ -283,7 +282,7 @@ workflows:
           release: major
           orb-name: thefrontside/react
           requires:
-            - integration-test-master
+            - integration-tests-master
           filters:
             branches:
               ignore: /.*/
