@@ -1,0 +1,14 @@
+description: >
+  Run tests using Jest
+
+steps:
+
+  - run:
+      name: Install JUnit reporter
+      command: yarn add --dev jest-junit
+
+  - run:
+      name: Run tests with JUnit as reporter
+      command: yarn test --ci --runInBand --reporters=default --reporters=jest-junit
+      environment:
+        JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"

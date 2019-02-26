@@ -1,0 +1,14 @@
+executor: default
+
+steps:
+
+  - attach_workspace:
+      at: ~/
+
+  - eslint
+
+  - store_test_results:
+      path: reports/eslint
+
+  - store_artifacts:
+      path: reports/eslint

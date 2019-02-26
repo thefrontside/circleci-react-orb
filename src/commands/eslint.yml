@@ -1,0 +1,12 @@
+description: >
+  Lint JS
+
+steps:
+  - run:
+      name: Ensure artifacts directory is present
+      command: mkdir -p reports/eslint
+
+  - run: yarn eslint
+      --max-warnings=0
+      --format junit
+      --output-file ./reports/eslint/eslint.xml

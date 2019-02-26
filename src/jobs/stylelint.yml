@@ -1,0 +1,17 @@
+executor: default
+
+steps:
+  - attach_workspace:
+      at: ~/
+
+  - run:
+      name: Set up artifacts directory
+      command: mkdir -p artifacts/stylelint
+
+  - stylelint
+
+  - store_test_results:
+      path: ./artifacts
+
+  - store_artifacts:
+      path: ./artifacts
