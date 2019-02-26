@@ -8,7 +8,7 @@ steps:
   - eslint
 
   - store_test_results:
-      path: ./artifacts
+      path: reports/eslint
 
   - store_artifacts:
-      path: ./artifacts
+      path: reports/eslint

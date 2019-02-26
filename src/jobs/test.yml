@@ -5,3 +5,9 @@ steps:
       at: ~/
 
   - test
+
+  - store_test_results:
+      path: reports/junit
+  
+  - store_artifacts:
+      path: reports/junit

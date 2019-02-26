@@ -4,9 +4,9 @@ description: >
 steps:
   - run:
       name: Ensure artifacts directory is present
-      command: mkdir -p artifacts/eslint
+      command: mkdir -p reports/eslint
 
   - run: yarn eslint
       --max-warnings=0
       --format junit
-      --output-file ./artifacts/eslint/eslint.xml
+      --output-file ./reports/eslint/eslint.xml
