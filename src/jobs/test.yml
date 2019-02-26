@@ -1,3 +1,6 @@
+description: >
+    Run tests and show results in the test summary.
+
 executor: default
 
 steps:

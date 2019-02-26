@@ -1,3 +1,7 @@
+description: >
+    Run the tests and generate coverage reports. 
+    The results are stored into artifacts.
+
 executor: default
 
 steps:

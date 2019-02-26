@@ -1,5 +1,6 @@
 description: >
-    Checkout and install dependencies
+    Install dependencies. Checkout is called before install.
+    (Optional) To prevent checkout from being called, pass your steps to before_install.
 
 executor: default
 

@@ -1,3 +1,7 @@
+description: >
+    Build the application in production mode. 
+    The built assets are stored in artifacts.
+
 executor: default
 
 steps:

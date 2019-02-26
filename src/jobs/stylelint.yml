@@ -1,3 +1,7 @@
+description: >
+    Run stylelint command on CSS files.
+    The result is stored in artifacts.
+
 executor: default
 
 steps:
