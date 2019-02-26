@@ -150,16 +150,6 @@ workflows:
             tags:
               only: /integration-.*/
 
-      - react/coverage:
-          name: integration-coverage-dev
-          requires:
-            - integration-install-dev
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /integration-.*/
-
       - integration-tests:
           name: integration-tests-dev
           requires:
