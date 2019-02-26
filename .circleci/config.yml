@@ -24,7 +24,7 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - run: echo "$CIRCLE_BUILD_URL""$CIRCLE_NODE_INDEX"artifacts"$CIRCLE_ARTIFACTS"
+      - run: echo $CIRCLE_BUILD_URL/$CIRCLE_NODE_INDEX/artifacts/$CIRCLE_ARTIFACTS
 
 workflows:
   lint-validate_publish-dev:
