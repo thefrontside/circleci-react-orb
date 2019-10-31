@@ -10,3 +10,4 @@ steps:
       --max-warnings=0
       --format junit
       --output-file ./reports/eslint/eslint.xml
+      .
