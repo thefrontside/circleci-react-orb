@@ -32,7 +32,7 @@ workflows:
   push:
     jobs:
       - react/install
-      - react/test
+      - react/test:
           requires:
             - react/install
 ```
